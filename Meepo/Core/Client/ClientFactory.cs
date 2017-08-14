@@ -1,22 +1,21 @@
-﻿using System;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Threading;
 using Meepo.Core.Configs;
 using Meepo.Core.Helpers;
 
-namespace Meepo.Core
+namespace Meepo.Core.Client
 {
-    internal class ClientFactory : IClientFactory
+    internal class ClientFactory
     {
         private readonly ILogger logger;
         private readonly CancellationToken cancellationToken;
         private readonly MessageReceivedHandler messageReceived;
-        private readonly Action<Guid> clientConnectionFailed;
+        private readonly ClientConnectionFailed clientConnectionFailed;
 
         public ClientFactory(ILogger logger,
             CancellationToken cancellationToken,
             MessageReceivedHandler messageReceived,
-            Action<Guid> clientConnectionFailed)
+            ClientConnectionFailed clientConnectionFailed)
         {
             this.logger = logger;
             this.cancellationToken = cancellationToken;

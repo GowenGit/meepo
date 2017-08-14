@@ -8,7 +8,7 @@ using Meepo.Core.Configs;
 using Meepo.Core.Helpers;
 using Meepo.Util;
 
-namespace Meepo.Core
+namespace Meepo.Core.Client
 {
     internal class ClientManager : IClientManager
     {
@@ -17,7 +17,7 @@ namespace Meepo.Core
 
         private readonly CancellationToken cancellationToken;
 
-        private readonly IClientFactory clientFactory;
+        private readonly ClientFactory clientFactory;
         private readonly ConcurrentSet<ClientWrapper> allClients = new ConcurrentSet<ClientWrapper>();
 
         public ClientManager(
@@ -53,7 +53,8 @@ namespace Meepo.Core
                 var client = listenerThread.Result;
 
                 var clientWrapper = clientFactory.GetClient(client);
-                if (client.Client != null) allClients.Add(clientWrapper);
+
+                allClients.Add(clientWrapper);
             }
         }
 
@@ -64,7 +65,8 @@ namespace Meepo.Core
                 Task.Factory.StartNew(() =>
                 {
                     var client = clientFactory.GetClient(address);
-                    if (client.Client != null) allClients.Add(client);
+
+                    allClients.Add(client);
                 }, cancellationToken);
             }
         }

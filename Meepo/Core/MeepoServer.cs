@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Meepo.Core.Client;
 using Meepo.Core.Configs;
 using Meepo.Core.Helpers;
 
@@ -10,41 +10,29 @@ namespace Meepo.Core
 {
     internal class MeepoServer : IMeepoServer
     {
-        private readonly TcpAddress machineAddress;
-        private readonly IEnumerable<TcpAddress> serverAddresses;
+        private readonly IClientManagerProvider clientManagerProvider;
         private readonly ILogger logger;
-        private readonly MessageReceivedHandler messageReceived;
 
         private IClientManager clientManager;
 
-        public MeepoServer(
-            TcpAddress machineAddress,
-            IEnumerable<TcpAddress> serverAddresses,
-            ILogger logger,
-            MessageReceivedHandler messageReceived)
+        public MeepoServer(IClientManagerProvider clientManagerProvider, ILogger logger)
         {
-            this.machineAddress = machineAddress;
-            this.serverAddresses = serverAddresses;
+            this.clientManagerProvider = clientManagerProvider;
             this.logger = logger;
-            this.messageReceived = messageReceived;
         }
 
-        public async Task RunServer(CancellationToken cancellationToken)
+        public async Task StartServer(CancellationToken cancellationToken)
         {
-            var listener = new TcpListener(machineAddress.IPAddress, machineAddress.Port);
-
             try
             {
-                listener.Start();
-                logger.Message($"Server at {machineAddress.IPAddress}:{machineAddress.Port} has started...");
+                clientManager = clientManagerProvider.GetClientManager(cancellationToken);
             }
-            catch (Exception ex)
+            catch (MeepoException)
             {
-                logger.Error("Server start failed", ex);
                 return;
             }
 
-            clientManager = new ClientManager(listener, serverAddresses, cancellationToken, logger, messageReceived);
+            logger.Message("Server is running...");
 
             try
             {
@@ -52,7 +40,11 @@ namespace Meepo.Core
             }
             catch (OperationCanceledException)
             {
-                logger.Message("Server has stopped.");
+                logger.Message("Server has stopped");
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Unknown server error", ex);
             }
         }
 

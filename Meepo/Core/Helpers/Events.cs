@@ -2,8 +2,10 @@
 
 namespace Meepo.Core.Helpers
 {
-    public delegate void MessageReceivedHandler(object sender, MessageReceivedEventArgs e);
+    public delegate void MessageReceivedHandler(MessageReceivedEventArgs e);
 
+    public delegate void ClientConnectionFailed(Guid clientId);
+    
     public class MessageReceivedEventArgs : EventArgs
     {
         public Guid Id { get; }

@@ -2,6 +2,9 @@
 
 namespace Meepo.Core.Configs
 {
+    /// <summary>
+    /// Todo: Make JSON configurable.
+    /// </summary>
     public static class TcpClientConfig
     {
         private const int BufferSizeInBytes = 8192;

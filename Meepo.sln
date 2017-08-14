@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meepo", "Meepo\Meepo.csproj", "{E41F3017-1E3A-49D4-8479-5DD5A5808389}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meepo", "Meepo\Meepo.csproj", "{E41F3017-1E3A-49D4-8479-5DD5A5808389}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meepo.Console", "Meepo.Console\Meepo.Console.csproj", "{E6BDA2E9-CC94-45EF-82AF-EBF7CC40D8E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meepo.Console", "Meepo.Console\Meepo.Console.csproj", "{E6BDA2E9-CC94-45EF-82AF-EBF7CC40D8E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meepo.Tests.Unit", "Meepo.Tests.Unit\Meepo.Tests.Unit.csproj", "{19A92205-00F8-43A9-AFF2-54234727DFB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meepo.Tests.Integration", "Meepo.Tests.Integration\Meepo.Tests.Integration.csproj", "{8EF7515F-46AD-4B8E-AB66-A69F81927864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{E6BDA2E9-CC94-45EF-82AF-EBF7CC40D8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6BDA2E9-CC94-45EF-82AF-EBF7CC40D8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6BDA2E9-CC94-45EF-82AF-EBF7CC40D8E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A92205-00F8-43A9-AFF2-54234727DFB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A92205-00F8-43A9-AFF2-54234727DFB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A92205-00F8-43A9-AFF2-54234727DFB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A92205-00F8-43A9-AFF2-54234727DFB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

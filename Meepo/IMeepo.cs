@@ -13,14 +13,38 @@ namespace Meepo
 
         event MessageReceivedHandler MessageReceived;
 
+        /// <summary>
+        /// Get IDs and addresses of all connected servers.
+        /// </summary>
+        /// <returns></returns>
         Dictionary<Guid, TcpAddress> GetServerClientInfos();
 
-        void RunServer();
+        /// <summary>
+        /// Run meepo server.
+        /// Starts listening for new clients
+        /// and connects to specified servers.
+        /// </summary>
+        void Start();
 
-        Task SendToClient(Guid id, byte[] bytes);
+        /// <summary>
+        /// Send message to a specific client.
+        /// </summary>
+        /// <param name="id">Client ID</param>
+        /// <param name="bytes">Bytes to send</param>
+        /// <returns></returns>
+        Task Send(Guid id, byte[] bytes);
 
-        Task SendToClients(byte[] bytes);
+        /// <summary>
+        /// Send message to all clients.
+        /// Including connected servers.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        Task Send(byte[] bytes);
 
-        void StopServer();
+        /// <summary>
+        /// Stop meepo server.
+        /// </summary>
+        void Stop();
     }
 }

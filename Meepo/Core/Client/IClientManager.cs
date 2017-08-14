@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Meepo.Core.Configs;
 
-namespace Meepo.Core
+namespace Meepo.Core.Client
 {
     internal interface IClientManager
     {

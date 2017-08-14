@@ -14,16 +14,16 @@ namespace Meepo.Console
             //var address = new TcpAddress(IPAddress.Loopback, 9200);
             //meepo = new Meepo(address);
 
-            //var address = new TcpAddress(IPAddress.Loopback, 9201);
-            //var serverAddress = new TcpAddress(IPAddress.Loopback, 9200);
-            //meepo = new Meepo(address, new[] { serverAddress });
+            var address = new TcpAddress(IPAddress.Loopback, 9201);
+            var serverAddress = new TcpAddress(IPAddress.Loopback, 9200);
+            meepo = new Meepo(address, new[] { serverAddress });
 
-            var address = new TcpAddress(IPAddress.Loopback, 9202);
-            var serverAddress1 = new TcpAddress(IPAddress.Loopback, 9200);
-            var serverAddress2 = new TcpAddress(IPAddress.Loopback, 9201);
-            meepo = new Meepo(address, new[] { serverAddress1, serverAddress2 });
+            //var address = new TcpAddress(IPAddress.Loopback, 9202);
+            //var serverAddress1 = new TcpAddress(IPAddress.Loopback, 9200);
+            //var serverAddress2 = new TcpAddress(IPAddress.Loopback, 9201);
+            //meepo = new Meepo(address, new[] { serverAddress1, serverAddress2 });
 
-            meepo.RunServer();
+            meepo.Start();
 
             meepo.MessageReceived += OnMessageReceived;
 
@@ -33,17 +33,17 @@ namespace Meepo.Console
 
                 if (text.ToLower() == "q")
                 {
-                    meepo.StopServer();
+                    meepo.Stop();
                     break;
                 }
 
-                var task = meepo.SendToClients(Encoding.UTF8.GetBytes(text));
+                var task = meepo.Send(Encoding.UTF8.GetBytes(text));
 
                 task.Wait();
             }
         }
 
-        private static void OnMessageReceived(object sender, MessageReceivedEventArgs args)
+        private static void OnMessageReceived(MessageReceivedEventArgs args)
         {
             System.Console.WriteLine($"Received: {Encoding.UTF8.GetString(args.Bytes)}");
             ShowServers();

@@ -10,7 +10,7 @@ namespace Meepo.Core
     {
         Dictionary<Guid, TcpAddress> GetServerClientInfos();
 
-        Task RunServer(CancellationToken cancellationToken);
+        Task StartServer(CancellationToken cancellationToken);
 
         Task SendToClient(Guid id, byte[] bytes);
 
