@@ -22,7 +22,7 @@ namespace Meepo.Core.Client
 
         public Guid Id { get; }
 
-        public TcpClient Client { get; }
+        public TcpClient Client { get; private set; }
 
         public TcpAddress Address { get; }
 
@@ -61,10 +61,6 @@ namespace Meepo.Core.Client
 
             IsToServer = true;
 
-            Client = new TcpClient();
-
-            Client.ApplyConfig();
-
             Connected = Connect();
         }
 
@@ -100,6 +96,10 @@ namespace Meepo.Core.Client
             var retries = 0;
 
             var failedToConnectException = new Exception();
+
+            Client = new TcpClient();
+
+            Client.ApplyConfig();
 
             while (!Client.Connected)
             {
@@ -190,8 +190,6 @@ namespace Meepo.Core.Client
             catch (Exception ex)
             {
                 logger.Error("Oops! Something went wrong!", ex);
-
-                Connected = Connect();
             }
         }
 
@@ -201,12 +199,7 @@ namespace Meepo.Core.Client
             {
                 clientConnectionFailed(Id);
 
-                if (Client != null && Client.Connected)
-                {
-                    Client?.GetStream()?.Dispose();
-                }
-
-                Client?.Dispose();
+                Close(Client);
             }
             catch (Exception ex)
             {
@@ -214,6 +207,16 @@ namespace Meepo.Core.Client
 
                 throw;
             }
+        }
+
+        private static void Close(TcpClient client)
+        {
+            if (client != null && client.Connected)
+            {
+                client.GetStream()?.Dispose();
+            }
+
+            client?.Dispose();
         }
     }
 }

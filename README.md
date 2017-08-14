@@ -42,5 +42,5 @@ public static void Main()
 
 ### Run on Windows or Linux
 
-* dotnet restore
-* dotnet run
+* `dotnet restore`
+* `dotnet run`
