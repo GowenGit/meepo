@@ -20,7 +20,7 @@ using (var meepo = new Meepo(address, serverAddress))
 {
     meepo.Start();
 
-    meepo.MessageReceived += OnMessageReceived;
+    meepo.MessageReceived += x => System.Console.WriteLine(x.Bytes.Decode());
 
     while (true)
     {
