@@ -4,7 +4,8 @@ using System.Net.Sockets;
 using System.Threading;
 using Meepo.Core.Client;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Exceptions;
+using Meepo.Core.Logging;
 
 namespace Meepo.Core
 {

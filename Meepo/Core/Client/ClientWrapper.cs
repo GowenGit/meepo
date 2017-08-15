@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Logging;
 using Meepo.Util;
 
 namespace Meepo.Core.Client

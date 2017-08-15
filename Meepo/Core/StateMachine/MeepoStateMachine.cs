@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Meepo.Core.Helpers;
+using Meepo.Core.Logging;
 
 namespace Meepo.Core.StateMachine
 {
@@ -11,6 +11,7 @@ namespace Meepo.Core.StateMachine
 
         private readonly Dictionary<StateTransition, State> transitions = new Dictionary<StateTransition, State>
         {
+            { new StateTransition(State.Running, Command.RemovieClient), State.Running},
             { new StateTransition(State.Running, Command.GetClientIds), State.Running},
             { new StateTransition(State.Running, Command.SendToClients), State.Running},
             { new StateTransition(State.Running, Command.SendToClient), State.Running},
@@ -23,7 +24,7 @@ namespace Meepo.Core.StateMachine
             this.logger = logger;
         }
 
-        public State GetNext(Command command)
+        private State GetNext(Command command)
         {
             var transition = new StateTransition(CurrenState, command);
 

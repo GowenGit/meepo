@@ -5,7 +5,8 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Exceptions;
+using Meepo.Core.Logging;
 using Meepo.Util;
 
 namespace Meepo.Core.Client
@@ -74,6 +75,9 @@ namespace Meepo.Core.Client
         public async Task SendToClient(Guid id, byte[] bytes)
         {
             var client = allClients[id];
+
+            if (client == null) throw new MeepoException($"No client with ID {id} was found!");
+
             await client.Send(bytes);
         }
 
@@ -103,7 +107,7 @@ namespace Meepo.Core.Client
             }
         }
 
-        private void RemoveClient(Guid id)
+        public void RemoveClient(Guid id)
         {
             allClients.Remove(id);
         }

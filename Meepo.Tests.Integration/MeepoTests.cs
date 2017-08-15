@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading;
 using NUnit.Framework;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Logging;
 using Moq;
 
 namespace Meepo.Tests.Integration

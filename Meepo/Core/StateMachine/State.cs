@@ -9,6 +9,7 @@
 
     public enum Command
     {
+        RemovieClient,
         SendToClients,
         SendToClient,
         GetClientIds,

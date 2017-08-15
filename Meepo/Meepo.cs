@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Logging;
 using Meepo.Core.StateMachine;
 
 namespace Meepo
@@ -14,7 +14,7 @@ namespace Meepo
         public State ServerState => stateMachine.CurrenState;
         private readonly MeepoStateMachine stateMachine;
 
-        private readonly IMeepoServer server;   
+        private readonly IMeepoServer server;
 
         private CancellationTokenSource cancellationTokenSource;
 
@@ -80,6 +80,17 @@ namespace Meepo
         }
 
         /// <summary>
+        /// Remove client.
+        /// </summary>
+        /// <param name="id">Client ID</param>
+        public void RemoveClient(Guid id)
+        {
+            if (stateMachine.MoveNext(Command.RemovieClient) == State.Invalid) return;
+
+            server.RemoveClient(id);
+        }
+
+        /// <summary>
         /// Send message to a specific client.
         /// </summary>
         /// <param name="id">Client ID</param>
@@ -119,6 +130,11 @@ namespace Meepo
         private void OnMessageReceived(MessageReceivedEventArgs args)
         {
             MessageReceived?.Invoke(args);
+        }
+
+        public void Dispose()
+        {
+            Stop();
         }
     }
 }

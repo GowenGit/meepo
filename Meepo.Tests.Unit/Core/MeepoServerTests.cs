@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Meepo.Core;
 using Meepo.Core.Client;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Logging;
 using Moq;
 using NUnit.Framework;
 

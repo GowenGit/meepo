@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Meepo.Core.Helpers
+namespace Meepo.Core.Exceptions
 {
     internal static class ExceptionHelpers
     {

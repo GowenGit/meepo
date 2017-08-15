@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Logging;
 
 namespace Meepo.Core.Client
 {

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Extensions;
 
 namespace Meepo.Console
 {
@@ -15,31 +15,22 @@ namespace Meepo.Console
             //meepo = new Meepo(address);
 
             var address = new TcpAddress(IPAddress.Loopback, 9201);
-            var serverAddress = new TcpAddress(IPAddress.Parse("192.168.15.123"), 9200);
-            meepo = new Meepo(address, new[] { serverAddress });
+            var serverAddresses = new[] { new TcpAddress(IPAddress.Parse("192.168.15.123"), 9200)};
 
-            //var address = new TcpAddress(IPAddress.Loopback, 9202);
-            //var serverAddress1 = new TcpAddress(IPAddress.Loopback, 9200);
-            //var serverAddress2 = new TcpAddress(IPAddress.Loopback, 9201);
-            //meepo = new Meepo(address, new[] { serverAddress1, serverAddress2 });
-
-            meepo.Start();
-
-            meepo.MessageReceived += OnMessageReceived;
-
-            while (true)
+            using (meepo = new Meepo(address, serverAddresses))
             {
-                var text = System.Console.ReadLine();
+                meepo.Start();
 
-                if (text.ToLower() == "q")
+                meepo.MessageReceived += OnMessageReceived;
+
+                while (true)
                 {
-                    meepo.Stop();
-                    break;
+                    var text = System.Console.ReadLine();
+
+                    if (text.ToLower() == "q") return;
+
+                    meepo.Send(text).Wait();
                 }
-
-                var task = meepo.Send(Encoding.UTF8.GetBytes(text));
-
-                task.Wait();
             }
         }
 

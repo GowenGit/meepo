@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Meepo.Core.Helpers
+namespace Meepo.Core.Logging
 {
     public interface ILogger
     {

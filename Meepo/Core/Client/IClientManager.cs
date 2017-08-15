@@ -14,5 +14,7 @@ namespace Meepo.Core.Client
         Task SendToClients(byte[] bytes);
 
         Dictionary<Guid, TcpAddress> GetServerClientInfos();
+
+        void RemoveClient(Guid id);
     }
 }

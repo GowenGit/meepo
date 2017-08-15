@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
 using Meepo.Core.StateMachine;
 
 namespace Meepo
 {
-    public interface IMeepo
+    public interface IMeepo : IDisposable
     {
         State ServerState { get; }
 
@@ -41,6 +40,12 @@ namespace Meepo
         /// <param name="bytes"></param>
         /// <returns></returns>
         Task Send(byte[] bytes);
+
+        /// <summary>
+        /// Remove client.
+        /// </summary>
+        /// <param name="id">Client ID</param>
+        void RemoveClient(Guid id);
 
         /// <summary>
         /// Stop meepo server.

@@ -15,5 +15,7 @@ namespace Meepo.Core
         Task SendToClient(Guid id, byte[] bytes);
 
         Task SendToClients(byte[] bytes);
+
+        void RemoveClient(Guid id);
     }
 }

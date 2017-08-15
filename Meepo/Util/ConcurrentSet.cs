@@ -28,7 +28,7 @@ namespace Meepo.Util
             {
                 lock (thisLock)
                 {
-                    return set.First(x => x.Id == id);
+                    return set.FirstOrDefault(x => x.Id == id);
                 }
             }
         }

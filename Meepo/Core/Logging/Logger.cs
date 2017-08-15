@@ -1,6 +1,7 @@
 ﻿using System;
+using Meepo.Core.Exceptions;
 
-namespace Meepo.Core.Helpers
+namespace Meepo.Core.Logging
 {
     internal class Logger : ILogger
     {

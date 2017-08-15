@@ -4,7 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core.Client;
 using Meepo.Core.Configs;
-using Meepo.Core.Helpers;
+using Meepo.Core.Exceptions;
+using Meepo.Core.Logging;
 
 namespace Meepo.Core
 {
@@ -56,6 +57,11 @@ namespace Meepo.Core
         public async Task SendToClients(byte[] bytes)
         {
             await clientManager.SendToClients(bytes);
+        }
+
+        public void RemoveClient(Guid id)
+        {
+            clientManager.RemoveClient(id);
         }
 
         public Dictionary<Guid, TcpAddress> GetServerClientInfos()
