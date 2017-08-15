@@ -23,7 +23,7 @@ namespace Meepo
         /// Starts listening for new clients
         /// and connects to specified servers.
         /// </summary>
-        void Start();
+        Task Start();
 
         /// <summary>
         /// Send message to a specific client.

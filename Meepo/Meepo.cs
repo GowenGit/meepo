@@ -60,7 +60,7 @@ namespace Meepo
         /// Starts listening for new clients
         /// and connects to specified servers.
         /// </summary>
-        public async void Start()
+        public async Task Start()
         {
             if (stateMachine.MoveNext(Command.Start) == State.Invalid) return;
 

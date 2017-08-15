@@ -15,7 +15,7 @@ namespace Meepo.Console
             //meepo = new Meepo(address);
 
             var address = new TcpAddress(IPAddress.Loopback, 9201);
-            var serverAddresses = new[] { new TcpAddress(IPAddress.Parse("192.168.15.123"), 9200)};
+            var serverAddresses = new[] { new TcpAddress(IPAddress.Parse("192.168.15.123"), 9201)};
 
             using (meepo = new Meepo(address, serverAddresses))
             {

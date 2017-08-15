@@ -48,7 +48,7 @@ namespace Meepo.Tests.Unit.Core
         }
 
         [Test]
-        public void SendToClient_WhenCalled_ShouldRouteMEssageToTheManager()
+        public void SendToClient_WhenCalled_ShouldRouteMessageToTheManager()
         {
             var id = Guid.NewGuid();
             var bytes = new byte[] { 00, 12, 23 };
@@ -69,7 +69,7 @@ namespace Meepo.Tests.Unit.Core
         }
 
         [Test]
-        public void SendToClients_WhenCalled_ShouldRouteMEssageToTheManager()
+        public void SendToClients_WhenCalled_ShouldRouteMessageToTheManager()
         {
             var bytes = new byte[] { 00, 12, 23 };
 
@@ -89,7 +89,7 @@ namespace Meepo.Tests.Unit.Core
         }
 
         [Test]
-        public void GetServerClientInfos_WhenCalled_ShouldRouteMEssageToTheManager()
+        public void GetServerClientInfos_WhenCalled_ShouldRouteMessageToTheManager()
         {
             clientManager
                 .Setup(x => x.GetServerClientInfos())

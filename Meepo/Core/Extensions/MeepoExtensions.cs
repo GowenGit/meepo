@@ -11,7 +11,7 @@ namespace Meepo.Core.Extensions
         /// </summary>
         /// <param name="message">Message to encode</param>
         /// <returns></returns>
-        public static byte[] Encode(string message)
+        public static byte[] Encode(this string message)
         {
             return Encoding.UTF8.GetBytes(message);
         }
