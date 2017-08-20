@@ -31,7 +31,7 @@ using (var meepo = new Meepo(address, serverAddresses))
 }
 ```
 
-You can pass in a `MeepoConfig` object that lets you to change the behavior of the server:
+You can pass in a `MeepoConfig` object that lets you change the behavior of the server:
 
 ```
 var config = new MeepoConfig
