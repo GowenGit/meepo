@@ -1,4 +1,4 @@
-# Meepo
+# <img src ="./icon.png" width="23px" /> Meepo
 
 ### Socket based duplex communication framework for .NET Core
 

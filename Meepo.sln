@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meepo", "Meepo\Meepo.csproj", "{E41F3017-1E3A-49D4-8479-5DD5A5808389}"
 EndProject
@@ -10,10 +10,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meepo.Tests.Unit", "Meepo.Tests.Unit\Meepo.Tests.Unit.csproj", "{19A92205-00F8-43A9-AFF2-54234727DFB7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meepo.Tests.Integration", "Meepo.Tests.Integration\Meepo.Tests.Integration.csproj", "{8EF7515F-46AD-4B8E-AB66-A69F81927864}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meepo.Serialization", "Meepo.Serialization\Meepo.Serialization.csproj", "{1F3A944E-B48A-4779-ACAE-D9D2629DEF62}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meepo.Serialization.Console", "Meepo.Serialization.Console\Meepo.Serialization.Console.csproj", "{F93CBE9F-D8F0-4DD0-9DAC-4ABAEE12C02C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,16 +33,11 @@ Global
 		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EF7515F-46AD-4B8E-AB66-A69F81927864}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F3A944E-B48A-4779-ACAE-D9D2629DEF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F3A944E-B48A-4779-ACAE-D9D2629DEF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F3A944E-B48A-4779-ACAE-D9D2629DEF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F3A944E-B48A-4779-ACAE-D9D2629DEF62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F93CBE9F-D8F0-4DD0-9DAC-4ABAEE12C02C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F93CBE9F-D8F0-4DD0-9DAC-4ABAEE12C02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F93CBE9F-D8F0-4DD0-9DAC-4ABAEE12C02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F93CBE9F-D8F0-4DD0-9DAC-4ABAEE12C02C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B1C677E-B983-479A-9F17-CAF8EFAA9DC1}
 	EndGlobalSection
 EndGlobal
