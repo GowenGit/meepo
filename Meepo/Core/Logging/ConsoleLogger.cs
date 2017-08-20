@@ -3,7 +3,7 @@ using Meepo.Core.Exceptions;
 
 namespace Meepo.Core.Logging
 {
-    internal class Logger : ILogger
+    public class ConsoleLogger : ILogger
     {
         public void Message(string message)
         {

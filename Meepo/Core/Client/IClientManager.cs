@@ -9,9 +9,9 @@ namespace Meepo.Core.Client
     {
         void Listen();
 
-        Task SendToClient(Guid id, byte[] bytes);
+        Task SendToClientAsync(Guid id, byte[] bytes);
 
-        Task SendToClients(byte[] bytes);
+        Task SendToClientsAsync(byte[] bytes);
 
         Dictionary<Guid, TcpAddress> GetServerClientInfos();
 

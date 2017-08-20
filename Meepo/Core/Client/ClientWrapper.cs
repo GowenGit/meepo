@@ -10,39 +10,36 @@ namespace Meepo.Core.Client
 {
     internal class ClientWrapper : IHasIndex
     {
-        private const int NoOfRetries = 20;
-        private readonly TimeSpan retryDelay = TimeSpan.FromSeconds(1);
-        private readonly TimeSpan clientPollingDelay = TimeSpan.FromSeconds(0.5);
-
         private readonly ILogger logger;
+        private readonly MeepoConfig config;
         private readonly CancellationToken cancellationToken;
 
         private readonly MessageReceivedHandler messageReceived;
         private readonly ClientConnectionFailed clientConnectionFailed;
 
-        public Guid Id { get; }
+        private bool Connected { get; set; }
 
-        public TcpClient Client { get; private set; }
+        private TcpClient Client { get; set; }
+
+        public Guid Id { get; }
 
         public TcpAddress Address { get; }
 
         public bool IsToServer { get; }
 
-        public bool Connected { get; private set; }
-
         public ClientWrapper(
             TcpClient client,
-            ILogger logger,
+            MeepoConfig config,
             CancellationToken cancellationToken,
             MessageReceivedHandler messageReceived,
             ClientConnectionFailed clientConnectionFailed)
-        : this(logger, cancellationToken, messageReceived, clientConnectionFailed)
+        : this(config, cancellationToken, messageReceived, clientConnectionFailed)
         {
             IsToServer = false;
 
             Client = client;
 
-            Client.ApplyConfig();
+            Client.ApplyConfig(config);
 
             Connected = true;
 
@@ -51,11 +48,11 @@ namespace Meepo.Core.Client
 
         public ClientWrapper(
             TcpAddress address,
-            ILogger logger,
+            MeepoConfig config,
             CancellationToken cancellationToken,
             MessageReceivedHandler messageReceived,
             ClientConnectionFailed clientConnectionFailed) 
-        : this(logger, cancellationToken, messageReceived, clientConnectionFailed)
+        : this(config, cancellationToken, messageReceived, clientConnectionFailed)
         {
             Address = address;
 
@@ -65,14 +62,16 @@ namespace Meepo.Core.Client
         }
 
         private ClientWrapper(
-            ILogger logger,
+            MeepoConfig config,
             CancellationToken cancellationToken,
             MessageReceivedHandler messageReceived,
             ClientConnectionFailed clientConnectionFailed)
         {
             Id = Guid.NewGuid();
 
-            this.logger = logger;
+            logger = config.Logger;
+
+            this.config = config;
             this.cancellationToken = cancellationToken;
             this.messageReceived = messageReceived;
             this.clientConnectionFailed = clientConnectionFailed;
@@ -80,9 +79,9 @@ namespace Meepo.Core.Client
 
         /// <summary>
         /// Try to connect to a TcpClient.
-        /// If can't connect to a client, return false.
-        /// Otherwise start listener and return true.
+        /// If can't connect to a client, return false
         /// and close connection. 
+        /// Otherwise start listener and return true.
         /// </summary>
         /// <returns></returns>
         private bool Connect()
@@ -99,7 +98,7 @@ namespace Meepo.Core.Client
 
             Client = new TcpClient();
 
-            Client.ApplyConfig();
+            Client.ApplyConfig(config);
 
             while (!Client.Connected)
             {
@@ -120,12 +119,12 @@ namespace Meepo.Core.Client
                     failedToConnectException = ex;
                 }
 
-                if (retries++ >= NoOfRetries - 1) break;
+                if (retries++ >= config.NumberOfRetries - 1) break;
 
                 logger.Warning($"Can't connect to {Address.IPAddress}:{Address.Port}." +
-                               $" Will retry in {retryDelay.Seconds} seconds. Retry: {retries}");
+                               $" Will retry in {config.RetryDelay.Seconds} seconds. Retry: {retries}");
 
-                Thread.Sleep(retryDelay);
+                Thread.Sleep(config.RetryDelay);
             }
 
             logger.Error("Error while connecting to the client", failedToConnectException);
@@ -167,7 +166,7 @@ namespace Meepo.Core.Client
                             messageReceived?.Invoke(args);
                         }
 
-                        Thread.Sleep(clientPollingDelay);
+                        Thread.Sleep(config.ClientPollingDelay);
                     }
                 }
             }

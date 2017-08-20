@@ -11,7 +11,7 @@ namespace Meepo.Util
 
         private readonly HashSet<T> set = new HashSet<T>();
 
-        public int Count
+        private int Count
         {
             get
             {

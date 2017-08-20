@@ -12,17 +12,20 @@ namespace Meepo.Core
     internal class ClientManagerProvider : IClientManagerProvider
     {
         private readonly ILogger logger;
+        private readonly MeepoConfig config;
         private readonly TcpAddress listenerAddress;
         private readonly IEnumerable<TcpAddress> serverAddresses;
         private readonly MessageReceivedHandler messageReceived;
 
         public ClientManagerProvider(
-            ILogger logger,
+            MeepoConfig config,
             TcpAddress listenerAddress,
             IEnumerable<TcpAddress> serverAddresses,
             MessageReceivedHandler messageReceived)
         {
-            this.logger = logger;
+            logger = config.Logger;
+
+            this.config = config;
             this.listenerAddress = listenerAddress;
             this.serverAddresses = serverAddresses;
             this.messageReceived = messageReceived;
@@ -49,7 +52,7 @@ namespace Meepo.Core
 
             logger.Message($"Listener at {listenerAddress.IPAddress}:{listenerAddress.Port} has started...");
 
-            return new ClientManager(listener, serverAddresses, cancellationToken, logger, messageReceived);
+            return new ClientManager(listener, serverAddresses, cancellationToken, config, messageReceived);
         }
     }
 }

@@ -16,13 +16,14 @@ namespace Meepo.Core
 
         private IClientManager clientManager;
 
-        public MeepoServer(IClientManagerProvider clientManagerProvider, ILogger logger)
+        public MeepoServer(IClientManagerProvider clientManagerProvider, MeepoConfig config)
         {
             this.clientManagerProvider = clientManagerProvider;
-            this.logger = logger;
+
+            logger = config.Logger;
         }
 
-        public async Task StartServer(CancellationToken cancellationToken)
+        public void StartServer(CancellationToken cancellationToken)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace Meepo.Core
 
             try
             {
-                await Task.Factory.StartNew(() => clientManager.Listen(), cancellationToken);
+                Task.Factory.StartNew(() => clientManager.Listen(), cancellationToken);
             }
             catch (OperationCanceledException)
             {
@@ -49,14 +50,14 @@ namespace Meepo.Core
             }
         }
 
-        public async Task SendToClient(Guid id, byte[] bytes)
+        public async Task SendToClientAsync(Guid id, byte[] bytes)
         {
-            await clientManager.SendToClient(id, bytes);
+            await clientManager.SendToClientAsync(id, bytes);
         }
 
-        public async Task SendToClients(byte[] bytes)
+        public async Task SendToClientsAsync(byte[] bytes)
         {
-            await clientManager.SendToClients(bytes);
+            await clientManager.SendToClientsAsync(bytes);
         }
 
         public void RemoveClient(Guid id)

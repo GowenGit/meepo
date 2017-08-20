@@ -29,7 +29,7 @@ namespace Meepo.Console
 
                     if (text.ToLower() == "q") return;
 
-                    meepo.Send(text).Wait();
+                    meepo.SendAsync(text).Wait();
                 }
             }
         }

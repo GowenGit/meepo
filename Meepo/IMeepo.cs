@@ -8,8 +8,15 @@ namespace Meepo
 {
     public interface IMeepo : IDisposable
     {
+        /// <summary>
+        /// Server state.
+        /// </summary>
         State ServerState { get; }
 
+        /// <summary>
+        /// This event is fired whenever server 
+        /// receives a message.
+        /// </summary>
         event MessageReceivedHandler MessageReceived;
 
         /// <summary>
@@ -19,11 +26,11 @@ namespace Meepo
         Dictionary<Guid, TcpAddress> GetServerClientInfos();
 
         /// <summary>
-        /// Run meepo server.
+        /// Run Meepo server.
         /// Starts listening for new clients
         /// and connects to specified servers.
         /// </summary>
-        Task Start();
+        void Start();
 
         /// <summary>
         /// Send message to a specific client.
@@ -31,7 +38,7 @@ namespace Meepo
         /// <param name="id">Client ID</param>
         /// <param name="bytes">Bytes to send</param>
         /// <returns></returns>
-        Task Send(Guid id, byte[] bytes);
+        Task SendAsync(Guid id, byte[] bytes);
 
         /// <summary>
         /// Send message to all clients.
@@ -39,7 +46,7 @@ namespace Meepo
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        Task Send(byte[] bytes);
+        Task SendAsync(byte[] bytes);
 
         /// <summary>
         /// Remove client.
@@ -48,7 +55,7 @@ namespace Meepo
         void RemoveClient(Guid id);
 
         /// <summary>
-        /// Stop meepo server.
+        /// Stop Meepo server.
         /// </summary>
         void Stop();
     }

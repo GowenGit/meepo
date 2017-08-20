@@ -34,7 +34,12 @@ namespace Meepo.Tests.Unit.Core
 
         private MeepoServer GetSutObject()
         {
-            return new MeepoServer(clientManagerProvider.Object, logger.Object);
+            var config = new MeepoConfig
+            {
+                Logger = logger.Object
+            };
+
+            return new MeepoServer(clientManagerProvider.Object, config);
         }
 
         [Test]
@@ -54,18 +59,18 @@ namespace Meepo.Tests.Unit.Core
             var bytes = new byte[] { 00, 12, 23 };
 
             clientManager
-                .Setup(x => x.SendToClient(id, bytes))
+                .Setup(x => x.SendToClientAsync(id, bytes))
                 .Returns(Task.CompletedTask);
 
             var sut = GetSutObject();
 
             StartServer(sut);
 
-            var task = sut.SendToClient(id, bytes);
+            var task = sut.SendToClientAsync(id, bytes);
 
             task.Wait();
 
-            clientManager.Verify(x => x.SendToClient(id, bytes), Times.Once);
+            clientManager.Verify(x => x.SendToClientAsync(id, bytes), Times.Once);
         }
 
         [Test]
@@ -74,18 +79,18 @@ namespace Meepo.Tests.Unit.Core
             var bytes = new byte[] { 00, 12, 23 };
 
             clientManager
-                .Setup(x => x.SendToClients(bytes))
+                .Setup(x => x.SendToClientsAsync(bytes))
                 .Returns(Task.CompletedTask);
 
             var sut = GetSutObject();
 
             StartServer(sut);
 
-            var task = sut.SendToClients(bytes);
+            var task = sut.SendToClientsAsync(bytes);
 
             task.Wait();
 
-            clientManager.Verify(x => x.SendToClients(bytes), Times.Once);
+            clientManager.Verify(x => x.SendToClientsAsync(bytes), Times.Once);
         }
 
         [Test]
@@ -108,9 +113,7 @@ namespace Meepo.Tests.Unit.Core
         {
             clientManager.Setup(x => x.Listen());
 
-            var task = server.StartServer(CancellationToken.None);
-
-            task.Wait();
+            server.StartServer(CancellationToken.None);
         }
     }
 }

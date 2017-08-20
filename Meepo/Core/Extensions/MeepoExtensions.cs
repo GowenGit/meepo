@@ -31,9 +31,9 @@ namespace Meepo.Core.Extensions
         /// </summary>
         /// <param name="meepo">Server instance</param>
         /// <param name="message">Message to send</param>
-        public static Task Send(this IMeepo meepo, string message)
+        public static Task SendAsync(this IMeepo meepo, string message)
         {
-            return meepo.Send(Encode(message));
+            return meepo.SendAsync(Encode(message));
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace Meepo.Core.Extensions
         /// <param name="meepo">Server instance</param>
         /// <param name="id">Client ID</param>
         /// <param name="message">Message to send</param>
-        public static Task Send(this IMeepo meepo, Guid id, string message)
+        public static Task SendAsync(this IMeepo meepo, Guid id, string message)
         {
-            return meepo.Send(id, Encode(message));
+            return meepo.SendAsync(id, Encode(message));
         }
     }
 }

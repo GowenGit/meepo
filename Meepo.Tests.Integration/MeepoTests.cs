@@ -44,7 +44,12 @@ namespace Meepo.Tests.Integration
         {
             var address = new TcpAddress(IPAddress.Loopback, 9211);
 
-            var tmp = new Meepo(address, serverLogger.Object);
+            var config = new MeepoConfig
+            {
+                Logger = serverLogger.Object
+            };
+
+            var tmp = new Meepo(address, config);
 
             tmp.MessageReceived += OnMessageReceived;
 
@@ -59,7 +64,12 @@ namespace Meepo.Tests.Integration
 
             var serverAddress = new TcpAddress(IPAddress.Loopback, 9211);
 
-            var tmp = new Meepo(address, new[] { serverAddress }, clientLogger.Object);
+            var config = new MeepoConfig
+            {
+                Logger = clientLogger.Object
+            };
+
+            var tmp = new Meepo(address, new[] { serverAddress }, config);
 
             tmp.MessageReceived += OnMessageReceived;
 
@@ -87,7 +97,7 @@ namespace Meepo.Tests.Integration
         {
             const string text = "Hello!";
 
-            var task = client.Send(ToBytes(text));
+            var task = client.SendAsync(ToBytes(text));
 
             task.Wait();
 
@@ -101,7 +111,7 @@ namespace Meepo.Tests.Integration
         {
             const string text = "Hi!";
 
-            var task = server.Send(ToBytes(text));
+            var task = server.SendAsync(ToBytes(text));
 
             task.Wait();
 

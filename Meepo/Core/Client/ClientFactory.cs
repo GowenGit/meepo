@@ -1,23 +1,22 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
 using Meepo.Core.Configs;
-using Meepo.Core.Logging;
 
 namespace Meepo.Core.Client
 {
     internal class ClientFactory
     {
-        private readonly ILogger logger;
+        private readonly MeepoConfig config;
         private readonly CancellationToken cancellationToken;
         private readonly MessageReceivedHandler messageReceived;
         private readonly ClientConnectionFailed clientConnectionFailed;
 
-        public ClientFactory(ILogger logger,
+        public ClientFactory(MeepoConfig config,
             CancellationToken cancellationToken,
             MessageReceivedHandler messageReceived,
             ClientConnectionFailed clientConnectionFailed)
         {
-            this.logger = logger;
+            this.config = config;
             this.cancellationToken = cancellationToken;
             this.messageReceived = messageReceived;
             this.clientConnectionFailed = clientConnectionFailed;
@@ -27,7 +26,7 @@ namespace Meepo.Core.Client
         {
             return new ClientWrapper(
                 client,
-                logger,
+                config,
                 cancellationToken,
                 messageReceived,
                 clientConnectionFailed);
@@ -37,7 +36,7 @@ namespace Meepo.Core.Client
         {
             return new ClientWrapper(
                 address,
-                logger,
+                config,
                 cancellationToken,
                 messageReceived,
                 clientConnectionFailed);

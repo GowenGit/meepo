@@ -4,20 +4,27 @@ using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core;
 using Meepo.Core.Configs;
-using Meepo.Core.Logging;
 using Meepo.Core.StateMachine;
 
 namespace Meepo
 {
     public class Meepo : IMeepo
     {
-        public State ServerState => stateMachine.CurrenState;
         private readonly MeepoStateMachine stateMachine;
 
         private readonly IMeepoServer server;
 
         private CancellationTokenSource cancellationTokenSource;
 
+        /// <summary>
+        /// Server state.
+        /// </summary>
+        public State ServerState => stateMachine.CurrenState;
+
+        /// <summary>
+        /// This event is fired whenever server 
+        /// receives a message.
+        /// </summary>
         public event MessageReceivedHandler MessageReceived;
 
         #region Constructors
@@ -25,52 +32,52 @@ namespace Meepo
         /// Constructor.
         /// </summary>
         /// <param name="listenerAddress">Address you want to expose</param>
-        public Meepo(TcpAddress listenerAddress) : this(listenerAddress, new TcpAddress[] { }, new Logger()) { }
+        public Meepo(TcpAddress listenerAddress) : this(listenerAddress, new TcpAddress[] { }, new MeepoConfig()) { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="listenerAddress">Address you want to expose</param>
-        /// <param name="logger">Custom ILogger implementation</param>
-        public Meepo(TcpAddress listenerAddress, ILogger logger) : this(listenerAddress, new TcpAddress[] { }, logger) { }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="listenerAddress">Address you want to expose</param>
-        /// <param name="serverAddresses">List of server addresses to connect to</param>
-        public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses) : this(listenerAddress, serverAddresses, new Logger()) { }
+        /// <param name="config">Custom Meepo configuration</param>
+        public Meepo(TcpAddress listenerAddress, MeepoConfig config) : this(listenerAddress, new TcpAddress[] { }, config) { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="listenerAddress">Address you want to expose</param>
         /// <param name="serverAddresses">List of server addresses to connect to</param>
-        /// <param name="logger">Custom ILogger implementation</param>
-        public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses, ILogger logger)
+        public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses) : this(listenerAddress, serverAddresses, new MeepoConfig()) { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="listenerAddress">Address you want to expose</param>
+        /// <param name="serverAddresses">List of server addresses to connect to</param>
+        /// <param name="config">Custom Meepo configuration</param>
+        public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses, MeepoConfig config)
         {
-            var clientManagerProvider = new ClientManagerProvider(logger, listenerAddress, serverAddresses, OnMessageReceived);
-            server = new MeepoServer(clientManagerProvider, logger);
-            stateMachine = new MeepoStateMachine(logger);
+            var clientManagerProvider = new ClientManagerProvider(config, listenerAddress, serverAddresses, OnMessageReceived);
+            server = new MeepoServer(clientManagerProvider, config);
+            stateMachine = new MeepoStateMachine(config.Logger);
         } 
         #endregion
 
         /// <summary>
-        /// Run meepo server.
+        /// Run Meepo server.
         /// Starts listening for new clients
         /// and connects to specified servers.
         /// </summary>
-        public async Task Start()
+        public void Start()
         {
             if (stateMachine.MoveNext(Command.Start) == State.Invalid) return;
 
             cancellationTokenSource = new CancellationTokenSource();
 
-            await server.StartServer(cancellationTokenSource.Token);
+            server.StartServer(cancellationTokenSource.Token);
         }
 
         /// <summary>
-        /// Stop meepo server.
+        /// Stop Meepo server.
         /// </summary>
         public void Stop()
         {
@@ -96,11 +103,11 @@ namespace Meepo
         /// <param name="id">Client ID</param>
         /// <param name="bytes">Bytes to send</param>
         /// <returns></returns>
-        public async Task Send(Guid id, byte[] bytes)
+        public async Task SendAsync(Guid id, byte[] bytes)
         {
             if (stateMachine.MoveNext(Command.SendToClient) == State.Invalid) return;
 
-            await server.SendToClient(id, bytes);
+            await server.SendToClientAsync(id, bytes);
         }
 
         /// <summary>
@@ -109,11 +116,11 @@ namespace Meepo
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public async Task Send(byte[] bytes)
+        public async Task SendAsync(byte[] bytes)
         {
             if (stateMachine.MoveNext(Command.SendToClients) == State.Invalid) return;
 
-            await server.SendToClients(bytes);
+            await server.SendToClientsAsync(bytes);
         }
 
         /// <summary>
@@ -122,9 +129,7 @@ namespace Meepo
         /// <returns></returns>
         public Dictionary<Guid, TcpAddress> GetServerClientInfos()
         {
-            if (stateMachine.MoveNext(Command.GetClientIds) == State.Invalid) return new Dictionary<Guid, TcpAddress>();
-
-            return server.GetServerClientInfos();
+            return stateMachine.MoveNext(Command.GetClientIds) == State.Invalid ? new Dictionary<Guid, TcpAddress>() : server.GetServerClientInfos();
         }
 
         private void OnMessageReceived(MessageReceivedEventArgs args)
@@ -132,6 +137,9 @@ namespace Meepo
             MessageReceived?.Invoke(args);
         }
 
+        /// <summary>
+        /// Stop and dispose Meepo server.
+        /// </summary>
         public void Dispose()
         {
             Stop();

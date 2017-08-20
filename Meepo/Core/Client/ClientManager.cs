@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core.Configs;
 using Meepo.Core.Exceptions;
-using Meepo.Core.Logging;
 using Meepo.Util;
 
 namespace Meepo.Core.Client
@@ -25,14 +24,14 @@ namespace Meepo.Core.Client
             TcpListener listener,
             IEnumerable<TcpAddress> serverAddresses,
             CancellationToken cancellationToken,
-            ILogger logger,
+            MeepoConfig config,
             MessageReceivedHandler messageReceived)
         {
             this.listener = listener;
             this.serverAddresses = serverAddresses;
             this.cancellationToken = cancellationToken;
 
-            clientFactory = new ClientFactory(logger, cancellationToken, messageReceived, RemoveClient);
+            clientFactory = new ClientFactory(config, cancellationToken, messageReceived, RemoveClient);
         }
 
         public void Listen()
@@ -72,7 +71,7 @@ namespace Meepo.Core.Client
             }
         }
 
-        public async Task SendToClient(Guid id, byte[] bytes)
+        public async Task SendToClientAsync(Guid id, byte[] bytes)
         {
             var client = allClients[id];
 
@@ -81,7 +80,7 @@ namespace Meepo.Core.Client
             await client.Send(bytes);
         }
 
-        public async Task SendToClients(byte[] bytes)
+        public async Task SendToClientsAsync(byte[] bytes)
         {
             foreach (var clientWrapper in allClients)
             {
