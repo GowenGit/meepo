@@ -27,6 +27,8 @@ namespace Meepo.Core.Client
 
         public bool IsToServer { get; }
 
+        #region Constructors
+
         public ClientWrapper(
             TcpClient client,
             MeepoConfig config,
@@ -51,7 +53,7 @@ namespace Meepo.Core.Client
             MeepoConfig config,
             CancellationToken cancellationToken,
             MessageReceivedHandler messageReceived,
-            ClientConnectionFailed clientConnectionFailed) 
+            ClientConnectionFailed clientConnectionFailed)
         : this(config, cancellationToken, messageReceived, clientConnectionFailed)
         {
             Address = address;
@@ -75,7 +77,9 @@ namespace Meepo.Core.Client
             this.cancellationToken = cancellationToken;
             this.messageReceived = messageReceived;
             this.clientConnectionFailed = clientConnectionFailed;
-        }
+        } 
+
+        #endregion
 
         /// <summary>
         /// Try to connect to a TcpClient.
@@ -149,21 +153,21 @@ namespace Meepo.Core.Client
             {
                 using (var stream = Client.GetStream())
                 {
+                    var messageBufferReader = new MessageBufferReader(Client, messageReceived);
+
                     while (Connected)
                     {
                         if (cancellationToken.IsCancellationRequested) break;
 
-                        if (!Client.Connected) Connected = Connect();
+                        if (!Client.Connected)
+                        {
+                            Connected = Connect();
+                            messageBufferReader = new MessageBufferReader(Client, messageReceived);
+                        }
 
                         while (Connected && stream.DataAvailable && !cancellationToken.IsCancellationRequested)
                         {
-                            var bytes = new byte[Client.Available];
-
-                            await stream.ReadAsync(bytes, 0, bytes.Length, cancellationToken);
-
-                            var args = new MessageReceivedEventArgs(Id, bytes);
-
-                            messageReceived?.Invoke(args);
+                            await messageBufferReader.Read(stream, cancellationToken, Id);
                         }
 
                         Thread.Sleep(config.ClientPollingDelay);
@@ -178,12 +182,19 @@ namespace Meepo.Core.Client
             }
         }
 
+        /// <summary>
+        /// Send first 4 bytes indicating message size
+        /// followed by the message itself.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public async Task Send(byte[] bytes)
         {
             try
             {
                 var stream = Client.GetStream();
 
+                await stream.WriteAsync(BitConverter.GetBytes(bytes.Length), 0, 4, cancellationToken);
                 await stream.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
             }
             catch (Exception ex)

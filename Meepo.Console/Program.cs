@@ -2,6 +2,7 @@
 using System.Text;
 using Meepo.Core.Configs;
 using Meepo.Core.Extensions;
+using Meepo.Core.Logging;
 
 namespace Meepo.Console
 {
@@ -11,13 +12,15 @@ namespace Meepo.Console
 
         public static void Main()
         {
-            //var address = new TcpAddress(IPAddress.Loopback, 9200);
-            //meepo = new Meepo(address);
+            var config = new MeepoConfig
+            {
+                Logger = new ConsoleLogger()
+            };
 
-            var address = new TcpAddress(IPAddress.Loopback, 9201);
-            var serverAddresses = new[] { new TcpAddress(IPAddress.Parse("192.168.15.123"), 9201)};
+            var address = new TcpAddress(IPAddress.Loopback, 9200);
+            var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9201)};
 
-            using (meepo = new Meepo(address, serverAddresses))
+            using (meepo = new Meepo(address, serverAddresses, config))
             {
                 meepo.Start();
 
@@ -46,7 +49,7 @@ namespace Meepo.Console
 
             foreach (var tcpAddress in servers)
             {
-                System.Console.WriteLine($"Id: {tcpAddress.Key} Url: {tcpAddress.Value.IPAddress}:{tcpAddress.Value.Port}");
+                System.Console.WriteLine($"ID: {tcpAddress.Key} URL: {tcpAddress.Value.IPAddress}:{tcpAddress.Value.Port}");
             }
         }
     }

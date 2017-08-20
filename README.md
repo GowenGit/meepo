@@ -26,7 +26,7 @@ using (var meepo = new Meepo(address, serverAddress))
     {
         var text = System.Console.ReadLine();
 
-        meepo.Send(text).Wait();
+        meepo.SendAsync(text).Wait();
     }
 }
 ```
