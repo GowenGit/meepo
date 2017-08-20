@@ -17,6 +17,7 @@
     <PackageLicenseUrl>https://github.com/GowenGit/Meepo</PackageLicenseUrl>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageReleaseNotes>Alpha release</PackageReleaseNotes>
+    <Version>0.1.1-alpha</Version>
   </PropertyGroup>
 
 </Project>

@@ -14,6 +14,7 @@ namespace Meepo.Console
         {
             var config = new MeepoConfig
             {
+                BufferSizeInBytes = 1000,
                 Logger = new ConsoleLogger()
             };
 

@@ -14,9 +14,9 @@ You can initialize a new node like this:
 var address = new TcpAddress(IPAddress.Loopback, 9201);
 
 // Nodes to connect to
-var serverAddress = new[] { new TcpAddress(IPAddress.Loopback, 9200) };
+var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9200) };
 
-using (var meepo = new Meepo(address, serverAddress))
+using (var meepo = new Meepo(address, serverAddresses))
 {
     meepo.Start();
 
@@ -29,6 +29,20 @@ using (var meepo = new Meepo(address, serverAddress))
         meepo.SendAsync(text).Wait();
     }
 }
+```
+
+You can pass in a `MeepoConfig` object that lets you to change the behavior of the server:
+
+```
+var config = new MeepoConfig
+{
+    BufferSizeInBytes = 1000,
+    Logger = new ConsoleLogger()
+};
+
+...
+
+var meepo = new Meepo(address, serverAddresses, config);
 ```
 
 ### Run on Windows or Linux

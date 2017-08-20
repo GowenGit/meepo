@@ -12,9 +12,9 @@ namespace Meepo.Console
             var address = new TcpAddress(IPAddress.Loopback, 9201);
 
             // Nodes to connect to
-            var serverAddress = new[] { new TcpAddress(IPAddress.Loopback, 9200) };
+            var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9200) };
 
-            using (var meepo = new Meepo(address, serverAddress))
+            using (var meepo = new Meepo(address, serverAddresses))
             {
                 meepo.Start();
 
