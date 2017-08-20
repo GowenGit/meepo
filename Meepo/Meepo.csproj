@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <Authors>Modestas Petravicius</Authors>
     <Title>Meepo</Title>
@@ -10,8 +9,6 @@
     <RepositoryUrl>https://github.com/GowenGit/Meepo</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/GowenGit/Meepo/master/icon.png</PackageIconUrl>
     <PackageTags>.NET Core;Sockets;Duplex;Cluster;Network</PackageTags>
-    <VersionPrefix>0.1.0</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RepositoryType>GitHub</RepositoryType>
     <PackageLicenseUrl>https://github.com/GowenGit/Meepo</PackageLicenseUrl>
@@ -19,5 +16,4 @@
     <PackageReleaseNotes>Alpha release</PackageReleaseNotes>
     <Version>0.1.1-alpha</Version>
   </PropertyGroup>
-
 </Project>
