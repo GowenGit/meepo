@@ -10,13 +10,18 @@ exception handling and automatic reconnects once the network is restored.
 You can initialize a new node like this:
 
 ```
+var config = new MeepoConfig
+{
+    Logger = new ConsoleLogger()
+};
+
 // IP Address to expose
 var address = new TcpAddress(IPAddress.Loopback, 9201);
 
 // Nodes to connect to
 var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9200) };
 
-using (var meepo = new Meepo(address, serverAddresses))
+using (var meepo = new Meepo(address, serverAddresses, config))
 {
     meepo.Start();
 
