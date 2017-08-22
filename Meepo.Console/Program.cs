@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text;
 using Meepo.Core.Configs;
 using Meepo.Core.Extensions;
 using Meepo.Core.Logging;
@@ -18,8 +17,8 @@ namespace Meepo.Console
                 Logger = new ConsoleLogger()
             };
 
-            var address = new TcpAddress(IPAddress.Loopback, 9200);
-            var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9201)};
+            var address = new TcpAddress(IPAddress.Loopback, 9201);
+            var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9200)};
 
             using (meepo = new Meepo(address, serverAddresses, config))
             {
@@ -40,7 +39,7 @@ namespace Meepo.Console
 
         private static void OnMessageReceived(MessageReceivedEventArgs args)
         {
-            System.Console.WriteLine($"Received: {Encoding.UTF8.GetString(args.Bytes)}");
+            System.Console.WriteLine($"Received: {args.Bytes.Decode()}");
             ShowServers();
         }
 
