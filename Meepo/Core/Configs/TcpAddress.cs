@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace Meepo.Core.Configs
 {
@@ -10,7 +11,7 @@ namespace Meepo.Core.Configs
 
         public TcpAddress(IPAddress ipAddress, int port)
         {
-            IPAddress = ipAddress;
+            IPAddress = ipAddress ?? throw new ArgumentNullException(nameof(ipAddress));
             Port = port;
         }
     }

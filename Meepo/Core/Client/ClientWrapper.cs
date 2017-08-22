@@ -3,12 +3,13 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Meepo.Core.Configs;
+using Meepo.Core.Exceptions;
 using Meepo.Core.Logging;
 using Meepo.Util;
 
 namespace Meepo.Core.Client
 {
-    internal class ClientWrapper : IHasIndex
+    internal class ClientWrapper : IHasIndex, IDisposable
     {
         private readonly ILogger logger;
         private readonly MeepoConfig config;
@@ -60,7 +61,7 @@ namespace Meepo.Core.Client
 
             IsToServer = true;
 
-            Connected = Connect();
+            Connected = Connect().Result;
         }
 
         private ClientWrapper(
@@ -88,11 +89,11 @@ namespace Meepo.Core.Client
         /// Otherwise start listener and return true.
         /// </summary>
         /// <returns></returns>
-        private bool Connect()
+        private async Task<bool> Connect()
         {
             if (!IsToServer)
             {
-                Close();
+                Dispose();
                 return false;
             }
 
@@ -108,9 +109,7 @@ namespace Meepo.Core.Client
             {
                 try
                 {
-                    var task = Client.ConnectAsync(Address.IPAddress, Address.Port);
-
-                    task.Wait(cancellationToken);
+                    await Client.ConnectAsync(Address.IPAddress, Address.Port);
 
                     if (Client.Connected)
                     {
@@ -128,12 +127,12 @@ namespace Meepo.Core.Client
                 logger.Warning($"Can't connect to {Address.IPAddress}:{Address.Port}." +
                                $" Will retry in {config.RetryDelay.Seconds} seconds. Retry: {retries}");
 
-                Thread.Sleep(config.RetryDelay);
+                await Task.Delay(config.RetryDelay, cancellationToken);
             }
 
             logger.Error("Error while connecting to the client", failedToConnectException);
 
-            Close();
+            Dispose();
 
             return false;
         }
@@ -153,7 +152,7 @@ namespace Meepo.Core.Client
             {
                 using (var stream = Client.GetStream())
                 {
-                    var messageBufferReader = new MessageBufferReader(Client, messageReceived);
+                    var messageBufferReader = new MessageBufferReader(config, Client, messageReceived);
 
                     while (Connected)
                     {
@@ -161,8 +160,8 @@ namespace Meepo.Core.Client
 
                         if (!Client.Connected)
                         {
-                            Connected = Connect();
-                            messageBufferReader = new MessageBufferReader(Client, messageReceived);
+                            Connected = await Connect();
+                            messageBufferReader = new MessageBufferReader(config, Client, messageReceived);
                         }
 
                         while (Connected && stream.DataAvailable && !cancellationToken.IsCancellationRequested)
@@ -170,7 +169,7 @@ namespace Meepo.Core.Client
                             await messageBufferReader.Read(stream, cancellationToken, Id);
                         }
 
-                        Thread.Sleep(config.ClientPollingDelay);
+                        await Task.Delay(config.ClientPollingDelay, CancellationToken.None);
                     }
                 }
             }
@@ -178,7 +177,7 @@ namespace Meepo.Core.Client
             {
                 logger.Error("Oops! Something went wrong! Will try to reconnect...", ex);
 
-                Connected = Connect();
+                Connected = await Connect();
             }
         }
 
@@ -192,6 +191,11 @@ namespace Meepo.Core.Client
         {
             try
             {
+                if (bytes.Length > config.BufferSizeInBytes)
+                {
+                    throw new MeepoException($"Buffer size {config.BufferSizeInBytes} (bytes) is less than the message size {bytes.Length} (bytes)!");
+                }
+
                 var stream = Client.GetStream();
 
                 await stream.WriteAsync(BitConverter.GetBytes(bytes.Length), 0, 4, cancellationToken);
@@ -203,7 +207,7 @@ namespace Meepo.Core.Client
             }
         }
 
-        public void Close()
+        public void Dispose()
         {
             try
             {

@@ -34,7 +34,7 @@ namespace Meepo.Core.Client
             clientFactory = new ClientFactory(config, cancellationToken, messageReceived, RemoveClient);
         }
 
-        public void Listen()
+        public async void Listen()
         {
             ConnectToServers();
 
@@ -46,11 +46,7 @@ namespace Meepo.Core.Client
                     break;
                 }
 
-                var listenerThread = listener.AcceptTcpClientAsync();
-
-                listenerThread.Wait(cancellationToken);
-
-                var client = listenerThread.Result;
+                var client = await listener.AcceptTcpClientAsync();
 
                 var clientWrapper = clientFactory.GetClient(client);
 
@@ -101,7 +97,7 @@ namespace Meepo.Core.Client
         {
             foreach (var clientWrapper in allClients)
             {
-                clientWrapper.Close();
+                clientWrapper.Dispose();
                 RemoveClient(clientWrapper.Id);
             }
         }

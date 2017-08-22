@@ -43,7 +43,7 @@ namespace Meepo.Core
             }
             catch (Exception ex)
             {
-                const string message = "Failed to start listener";
+                var message = $"Failed to start listener at {listenerAddress.IPAddress}:{listenerAddress.Port}";
 
                 logger.Error(message, ex);
 

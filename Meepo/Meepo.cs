@@ -56,10 +56,25 @@ namespace Meepo
         /// <param name="config">Custom Meepo configuration</param>
         public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses, MeepoConfig config)
         {
+            if (serverAddresses == null) throw new ArgumentNullException(nameof(serverAddresses));
+            if (config == null) throw new ArgumentNullException(nameof(config));
+            if (config.Logger == null) throw new ArgumentNullException(nameof(config));
+
             var clientManagerProvider = new ClientManagerProvider(config, listenerAddress, serverAddresses, OnMessageReceived);
             server = new MeepoServer(clientManagerProvider, config);
             stateMachine = new MeepoStateMachine(config.Logger);
-        } 
+        }
+
+        /// <summary>
+        /// Test constructor
+        /// </summary>
+        /// <param name="stateMachine">State machine</param>
+        /// <param name="server">Meepo server instance</param>
+        internal Meepo(MeepoStateMachine stateMachine, IMeepoServer server)
+        {
+            this.stateMachine = stateMachine ?? throw new ArgumentNullException(nameof(stateMachine));
+            this.server = server ?? throw new ArgumentNullException(nameof(server));
+        }
         #endregion
 
         /// <summary>
@@ -92,6 +107,8 @@ namespace Meepo
         /// <param name="id">Client ID</param>
         public void RemoveClient(Guid id)
         {
+            if (id == Guid.Empty) throw new ArgumentException(nameof(id));
+
             if (stateMachine.MoveNext(Command.RemovieClient) == State.Invalid) return;
 
             server.RemoveClient(id);
@@ -105,6 +122,9 @@ namespace Meepo
         /// <returns></returns>
         public async Task SendAsync(Guid id, byte[] bytes)
         {
+            if (id == Guid.Empty) throw new ArgumentException(nameof(id));
+            if (bytes == null) throw new ArgumentNullException(nameof(bytes));
+
             if (stateMachine.MoveNext(Command.SendToClient) == State.Invalid) return;
 
             await server.SendToClientAsync(id, bytes);
@@ -118,6 +138,8 @@ namespace Meepo
         /// <returns></returns>
         public async Task SendAsync(byte[] bytes)
         {
+            if (bytes == null) throw new ArgumentNullException(nameof(bytes));
+
             if (stateMachine.MoveNext(Command.SendToClients) == State.Invalid) return;
 
             await server.SendToClientsAsync(bytes);
