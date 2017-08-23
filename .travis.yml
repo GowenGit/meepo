@@ -1,7 +1,7 @@
 language: csharp
 solution: Meepo.sln
 mono: none
-dotnet: 2.0.0
+dotnet: 1.0.1
 dist: xenial
 script:
  - dotnet restore
