@@ -7,14 +7,14 @@
     <Copyright>MIT License</Copyright>
     <PackageProjectUrl>https://github.com/GowenGit/Meepo</PackageProjectUrl>
     <RepositoryUrl>https://github.com/GowenGit/Meepo</RepositoryUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/GowenGit/Meepo/master/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/GowenGit/Meepo/master/Assets/icon.png</PackageIconUrl>
     <PackageTags>.NET Core;Sockets;Duplex;Cluster;Network</PackageTags>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RepositoryType>GitHub</RepositoryType>
     <PackageLicenseUrl>https://github.com/GowenGit/Meepo</PackageLicenseUrl>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageReleaseNotes>Alpha release</PackageReleaseNotes>
-    <Version>0.1.1-alpha</Version>
+    <Version>0.2.0-alpha</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp1.1\Meepo.xml</DocumentationFile>

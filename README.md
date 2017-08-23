@@ -1,4 +1,4 @@
-# <img src ="./icon.png" width="23px" /> Meepo 
+#  <div> <img style="vertical-align:middle" src="./Assets/icon64.png"><span style="margin-left: 25px;">Meepo</span></div>
 
 ### [![Build Status](https://travis-ci.org/GowenGit/Meepo.svg?branch=master)](https://travis-ci.org/GowenGit/Meepo)
 
