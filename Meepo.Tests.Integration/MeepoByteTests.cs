@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Meepo.Core.Exceptions;
 using Meepo.Core.Extensions;
 using Meepo.Core.Logging;
 using Moq;
@@ -97,13 +98,13 @@ namespace Meepo.Tests.Integration
         [Test]
         public void SendAsync_WhenCalledWithMoreThanBufferSizeBytes_ServerShouldThrow()
         {
-            Assert.Throws<AggregateException>(() => server.SendAsync(new byte[1001]).Wait());
+            Assert.Throws<MeepoException>(() => server.SendAsync(new byte[1001]).GetAwaiter().GetResult());
         }
 
         [Test]
         public void SendAsync_WhenCalledWithMoreThanBufferSizeBytes_ClientShouldThrow()
         {
-            Assert.Throws<AggregateException>(() => client.SendAsync(new byte[10001]).Wait());
+            Assert.Throws<MeepoException>(() => client.SendAsync(new byte[10001]).GetAwaiter().GetResult());
         }
 
         private void OnMessageReceived(MessageReceivedEventArgs args)
@@ -138,7 +139,7 @@ namespace Meepo.Tests.Integration
         [Test]
         public void SendAsync_WhenCalledWithInvalidId_ShouldThrow()
         {
-            Assert.Throws<AggregateException>(() => server.SendAsync(Guid.NewGuid(), "").Wait());
+            Assert.Throws<MeepoException>(() => server.SendAsync(Guid.NewGuid(), "").GetAwaiter().GetResult());
         }
 
         [OneTimeTearDown]

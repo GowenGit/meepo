@@ -173,7 +173,7 @@ namespace Meepo.Tests.Unit
         {
             var sut = GetSutObject();
 
-            Assert.Throws<AggregateException>(() => sut.SendAsync(Guid.Empty, new byte[0]).Wait());
+            Assert.Throws<ArgumentException>(() => sut.SendAsync(Guid.Empty, new byte[0]).GetAwaiter().GetResult());
         }
 
 
@@ -182,7 +182,7 @@ namespace Meepo.Tests.Unit
         {
             var sut = GetSutObject();
 
-            Assert.Throws<AggregateException>(() => sut.SendAsync(Guid.NewGuid(), null).Wait());
+            Assert.Throws<ArgumentNullException>(() => sut.SendAsync(Guid.NewGuid(), null).GetAwaiter().GetResult());
         }
 
         [Test]
@@ -220,7 +220,7 @@ namespace Meepo.Tests.Unit
         {
             var sut = GetSutObject();
 
-            Assert.Throws<AggregateException>(() => sut.SendAsync(null).Wait());
+            Assert.Throws<ArgumentNullException>(() => sut.SendAsync(null).GetAwaiter().GetResult());
         }
 
         [Test]

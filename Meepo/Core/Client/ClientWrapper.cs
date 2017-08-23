@@ -201,7 +201,7 @@ namespace Meepo.Core.Client
                 await stream.WriteAsync(BitConverter.GetBytes(bytes.Length), 0, 4, cancellationToken);
                 await stream.WriteAsync(bytes, 0, bytes.Length, cancellationToken);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (!(ex is MeepoException))
             {
                 logger.Error("Oops! Something went wrong!", ex);
             }
