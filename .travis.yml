@@ -1,0 +1,9 @@
+language: csharp
+solution: Meepo.sln
+mono: none
+dotnet: 2.0.0
+dist: xenial
+script:
+ - dotnet restore
+ - dotnet test Meepo.Tests.Unit/Meepo.Tests.Unit.csproj
+ - dotnet test Meepo.Tests.Integration/Meepo.Tests.Integration.csproj
