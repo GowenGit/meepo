@@ -1,6 +1,6 @@
 # <img src ="./icon.png" width="23px" /> Meepo 
 
-## [![Build Status](https://travis-ci.org/GowenGit/Meepo.svg?branch=master)](https://travis-ci.org/GowenGit/Meepo)
+### [![Build Status](https://travis-ci.org/GowenGit/Meepo.svg?branch=master)](https://travis-ci.org/GowenGit/Meepo)
 
 ### Socket based duplex communication framework for .NET Core
 
