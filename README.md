@@ -1,4 +1,4 @@
-#  <div> <img style="vertical-align:middle" src="./Assets/icon64.png"><span style="margin-left: 25px;">Meepo</span></div>
+# Meepo
 
 ### [![Build Status](https://travis-ci.org/GowenGit/Meepo.svg?branch=master)](https://travis-ci.org/GowenGit/Meepo)
 
@@ -52,7 +52,11 @@ var config = new MeepoConfig
 var meepo = new Meepo(address, serverAddresses, config);
 ```
 
-### Run on Windows or Linux
+### Installation
 
 * Restore solution: `dotnet restore`
 * Run the console app: `dotnet run`
+
+### License
+
+MIT License
