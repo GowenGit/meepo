@@ -1,4 +1,4 @@
-# Meepo
+# <img src ="./Assets/Meepo Logo.svg" height="120px"/>
 
 ### [![Build Status](https://travis-ci.org/GowenGit/Meepo.svg?branch=master)](https://travis-ci.org/GowenGit/Meepo)
 
