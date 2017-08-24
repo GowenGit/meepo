@@ -1,4 +1,4 @@
-# <img src ="./Assets/Meepo Logo.svg" height="120px"/>
+# <img src ="https://rawgit.com/GowenGit/Meepo/master/Assets/Meepo%20Logo.svg" height="120px"/>
 
 ### [![Build Status](https://travis-ci.org/GowenGit/Meepo.svg?branch=master)](https://travis-ci.org/GowenGit/Meepo)
 
