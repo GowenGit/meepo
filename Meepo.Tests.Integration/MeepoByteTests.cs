@@ -17,8 +17,8 @@ namespace Meepo.Tests.Integration
 
         private byte[] bytes;
 
-        private readonly Meepo server;
-        private readonly Meepo client;
+        private readonly MeepoNode server;
+        private readonly MeepoNode client;
 
         public MeepoByteTests()
         {

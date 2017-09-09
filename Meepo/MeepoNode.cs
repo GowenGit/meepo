@@ -8,7 +8,7 @@ using Meepo.Core.StateMachine;
 
 namespace Meepo
 {
-    public class Meepo : IMeepo
+    public class MeepoNode : IMeepoNode
     {
         private readonly MeepoStateMachine stateMachine;
 
@@ -32,29 +32,29 @@ namespace Meepo
         /// Constructor.
         /// </summary>
         /// <param name="listenerAddress">Address you want to expose</param>
-        public Meepo(TcpAddress listenerAddress) : this(listenerAddress, new TcpAddress[] { }, new MeepoConfig()) { }
+        public MeepoNode(TcpAddress listenerAddress) : this(listenerAddress, new TcpAddress[] { }, new MeepoConfig()) { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="listenerAddress">Address you want to expose</param>
-        /// <param name="config">Custom Meepo configuration</param>
-        public Meepo(TcpAddress listenerAddress, MeepoConfig config) : this(listenerAddress, new TcpAddress[] { }, config) { }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="listenerAddress">Address you want to expose</param>
-        /// <param name="serverAddresses">List of server addresses to connect to</param>
-        public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses) : this(listenerAddress, serverAddresses, new MeepoConfig()) { }
+        /// <param name="config">Custom MeepoNode configuration</param>
+        public MeepoNode(TcpAddress listenerAddress, MeepoConfig config) : this(listenerAddress, new TcpAddress[] { }, config) { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="listenerAddress">Address you want to expose</param>
         /// <param name="serverAddresses">List of server addresses to connect to</param>
-        /// <param name="config">Custom Meepo configuration</param>
-        public Meepo(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses, MeepoConfig config)
+        public MeepoNode(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses) : this(listenerAddress, serverAddresses, new MeepoConfig()) { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="listenerAddress">Address you want to expose</param>
+        /// <param name="serverAddresses">List of server addresses to connect to</param>
+        /// <param name="config">Custom MeepoNode configuration</param>
+        public MeepoNode(TcpAddress listenerAddress, IEnumerable<TcpAddress> serverAddresses, MeepoConfig config)
         {
             if (serverAddresses == null) throw new ArgumentNullException(nameof(serverAddresses));
             if (config == null) throw new ArgumentNullException(nameof(config));
@@ -70,7 +70,7 @@ namespace Meepo
         /// </summary>
         /// <param name="stateMachine">State machine</param>
         /// <param name="server">Meepo server instance</param>
-        internal Meepo(MeepoStateMachine stateMachine, IMeepoServer server)
+        internal MeepoNode(MeepoStateMachine stateMachine, IMeepoServer server)
         {
             this.stateMachine = stateMachine ?? throw new ArgumentNullException(nameof(stateMachine));
             this.server = server ?? throw new ArgumentNullException(nameof(server));

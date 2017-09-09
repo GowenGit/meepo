@@ -30,9 +30,9 @@ namespace Meepo.Tests.Unit
             server = new Mock<IMeepoServer>();
         }
 
-        private Meepo GetSutObject()
+        private MeepoNode GetSutObject()
         {
-            return new Meepo(stateMachine, server.Object);
+            return new MeepoNode(stateMachine, server.Object);
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace Meepo.Tests.Unit
             var listenerAddress = new TcpAddress(IPAddress.Any, 80);
             var serverAddresses = new TcpAddress[0];
 
-            Assert.Throws<ArgumentNullException>(() => new Meepo(listenerAddress, config: null));
-            Assert.Throws<ArgumentNullException>(() => new Meepo(listenerAddress, serverAddresses, null));
+            Assert.Throws<ArgumentNullException>(() => new MeepoNode(listenerAddress, config: null));
+            Assert.Throws<ArgumentNullException>(() => new MeepoNode(listenerAddress, serverAddresses, null));
         }
 
         [Test]
@@ -57,8 +57,8 @@ namespace Meepo.Tests.Unit
             var listenerAddress = new TcpAddress(IPAddress.Any, 80);
             var config = new MeepoConfig();
 
-            Assert.Throws<ArgumentNullException>(() => new Meepo(listenerAddress, serverAddresses: null));
-            Assert.Throws<ArgumentNullException>(() => new Meepo(listenerAddress, null, config));
+            Assert.Throws<ArgumentNullException>(() => new MeepoNode(listenerAddress, serverAddresses: null));
+            Assert.Throws<ArgumentNullException>(() => new MeepoNode(listenerAddress, null, config));
         }
 
         [Test]
@@ -71,8 +71,8 @@ namespace Meepo.Tests.Unit
                 Logger = null
             };
 
-            Assert.Throws<ArgumentNullException>(() => new Meepo(listenerAddress, config));
-            Assert.Throws<ArgumentNullException>(() => new Meepo(listenerAddress, serverAddresses, config));
+            Assert.Throws<ArgumentNullException>(() => new MeepoNode(listenerAddress, config));
+            Assert.Throws<ArgumentNullException>(() => new MeepoNode(listenerAddress, serverAddresses, config));
         }
 
         [Test]

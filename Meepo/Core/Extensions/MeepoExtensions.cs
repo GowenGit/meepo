@@ -29,22 +29,22 @@ namespace Meepo.Core.Extensions
         /// <summary>
         /// Send string to all nodes.
         /// </summary>
-        /// <param name="meepo">Server instance</param>
+        /// <param name="meepoNode">Server instance</param>
         /// <param name="message">Message to send</param>
-        public static Task SendAsync(this IMeepo meepo, string message)
+        public static Task SendAsync(this IMeepoNode meepoNode, string message)
         {
-            return meepo.SendAsync(Encode(message));
+            return meepoNode.SendAsync(Encode(message));
         }
 
         /// <summary>
         /// Send string to all nodes.
         /// </summary>
-        /// <param name="meepo">Server instance</param>
+        /// <param name="meepoNode">Server instance</param>
         /// <param name="id">Client ID</param>
         /// <param name="message">Message to send</param>
-        public static Task SendAsync(this IMeepo meepo, Guid id, string message)
+        public static Task SendAsync(this IMeepoNode meepoNode, Guid id, string message)
         {
-            return meepo.SendAsync(id, Encode(message));
+            return meepoNode.SendAsync(id, Encode(message));
         }
     }
 }

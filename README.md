@@ -23,7 +23,7 @@ var address = new TcpAddress(IPAddress.Loopback, 9201);
 // Nodes to connect to
 var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9200) };
 
-using (var meepo = new Meepo(address, serverAddresses, config))
+using (var meepo = new MeepoNode(address, serverAddresses, config))
 {
     meepo.Start();
 

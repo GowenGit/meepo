@@ -6,7 +6,7 @@ using Meepo.Core.StateMachine;
 
 namespace Meepo
 {
-    public interface IMeepo : IDisposable
+    public interface IMeepoNode : IDisposable
     {
         /// <summary>
         /// Server state.

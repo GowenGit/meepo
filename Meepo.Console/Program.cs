@@ -7,7 +7,7 @@ namespace Meepo.Console
 {
     public class Program
     {
-        private static IMeepo meepo;
+        private static IMeepoNode meepoNode;
 
         public static void Main()
         {
@@ -20,11 +20,11 @@ namespace Meepo.Console
             var address = new TcpAddress(IPAddress.Loopback, 9201);
             var serverAddresses = new[] { new TcpAddress(IPAddress.Loopback, 9200)};
 
-            using (meepo = new Meepo(address, serverAddresses, config))
+            using (meepoNode = new MeepoNode(address, serverAddresses, config))
             {
-                meepo.Start();
+                meepoNode.Start();
 
-                meepo.MessageReceived += OnMessageReceived;
+                meepoNode.MessageReceived += OnMessageReceived;
 
                 while (true)
                 {
@@ -32,7 +32,7 @@ namespace Meepo.Console
 
                     if (text.ToLower() == "q") return;
 
-                    meepo.SendAsync(text).Wait();
+                    meepoNode.SendAsync(text).Wait();
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace Meepo.Console
 
         private static void ShowServers()
         {
-            var servers = meepo.GetServerClientInfos();
+            var servers = meepoNode.GetServerClientInfos();
 
             foreach (var tcpAddress in servers)
             {

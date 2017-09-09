@@ -8,7 +8,7 @@ namespace Meepo.Tests.Integration
     {
         public const int WaitTime = 1000;
 
-        public static Meepo StartServer(int port, ILogger logger, MessageReceivedHandler messageReceived, int buffer = 1000)
+        public static MeepoNode StartServer(int port, ILogger logger, MessageReceivedHandler messageReceived, int buffer = 1000)
         {
             var address = new TcpAddress(IPAddress.Loopback, port);
 
@@ -18,7 +18,7 @@ namespace Meepo.Tests.Integration
                 BufferSizeInBytes = buffer
             };
 
-            var tmp = new Meepo(address, config);
+            var tmp = new MeepoNode(address, config);
 
             tmp.MessageReceived += messageReceived;
 
@@ -27,7 +27,7 @@ namespace Meepo.Tests.Integration
             return tmp;
         }
 
-        public static Meepo StartClient(int port, int serverPort, ILogger logger, MessageReceivedHandler messageReceived, int buffer = 1000)
+        public static MeepoNode StartClient(int port, int serverPort, ILogger logger, MessageReceivedHandler messageReceived, int buffer = 1000)
         {
             var address = new TcpAddress(IPAddress.Loopback, port);
 
@@ -39,7 +39,7 @@ namespace Meepo.Tests.Integration
                 BufferSizeInBytes = buffer
             };
 
-            var tmp = new Meepo(address, serverAddress, config);
+            var tmp = new MeepoNode(address, serverAddress, config);
 
             tmp.MessageReceived += messageReceived;
 
