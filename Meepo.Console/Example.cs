@@ -30,6 +30,8 @@ namespace Meepo.Console
                 {
                     var text = System.Console.ReadLine();
 
+                    if (text.ToLower() == "q") break;
+
                     meepo.SendAsync(text).Wait();
                 }
             }
