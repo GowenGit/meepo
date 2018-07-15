@@ -11,7 +11,7 @@ exception handling and automatic reconnects once the network is restored.
 
 You can initialize a new node like this:
 
-```
+```cs
 var config = new MeepoConfig
 {
     Logger = new ConsoleLogger()
@@ -40,7 +40,7 @@ using (var meepo = new MeepoNode(address, serverAddresses, config))
 
 You can pass in a `MeepoConfig` object that lets you change the behavior of the server:
 
-```
+```cs
 var config = new MeepoConfig
 {
     BufferSizeInBytes = 1000,
