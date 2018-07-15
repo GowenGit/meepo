@@ -6,7 +6,7 @@ namespace Meepo.Tests.Integration
 {
     internal static class IntegrationTestHelpers
     {
-        public const int WaitTime = 5000;
+        public const int WaitTime = 1000;
 
         public static MeepoNode StartServer(int port, ILogger logger, MessageReceivedHandler messageReceived, int buffer = 1000)
         {
