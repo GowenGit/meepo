@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="172.76469mm"
+   width="183.56712mm"
    height="97.541702mm"
-   viewBox="0 0 172.76469 97.541702"
+   viewBox="0 0 183.56712 97.541702"
    version="1.1"
    id="svg4775"
-   inkscape:version="0.92.1 r15371"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="Meepo Logo.svg">
   <defs
      id="defs4769" />
@@ -26,15 +26,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="187.38966"
-     inkscape:cy="200.97957"
+     inkscape:cx="11.11804"
+     inkscape:cy="200.97958"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1858"
-     inkscape:window-height="1057"
-     inkscape:window-x="54"
-     inkscape:window-y="-8"
+     inkscape:window-width="1873"
+     inkscape:window-height="1025"
+     inkscape:window-x="47"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -182,6 +182,6 @@
          id="tspan5370"
          x="102.63149"
          y="79.175339"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#3d4350;fill-opacity:1;stroke-width:0.26458332">Meepo</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.39999962px;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#3d4350;fill-opacity:1;stroke-width:0.26458332">Meepo</tspan></text>
   </g>
 </svg>
